@@ -19,6 +19,9 @@ public interface ProductDAO {
     @Delete
     void delete(Product product);
 
+    @Query("DELETE FROM Product")
+    void clearTable();
+
     @Update
     void update(Product product);
 }
