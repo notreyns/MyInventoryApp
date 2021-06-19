@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -65,7 +66,6 @@ public class AddProductActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 productImageView.setImageBitmap(bitmap);
                 productImageView.setVisibility(View.VISIBLE);
-                myBitmap=bitmap;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -112,7 +112,7 @@ public class AddProductActivity extends AppCompatActivity {
                 product.setPrice(sPrice);
                 product.setQuantity(sQuantity);
                 product.setSupplier(sSupplier);
-                product.setImage(myBitmap);
+                product.setImage(((BitmapDrawable)productImageView.getDrawable()).getBitmap());
 
                 //task.setFinished(false);
 
