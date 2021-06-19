@@ -10,25 +10,25 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductsViewHolder> {
 
     private Context mCtx;
-    private List<Task> taskList;
+    private List<Product> productList;
 
-    public TasksAdapter(Context mCtx, List<Task> taskList) {
+    public ProductAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
-        this.taskList = taskList;
+        this.productList = productList;
     }
 
     @Override
-    public TasksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_tasks, parent, false);
-        return new TasksViewHolder(view);
+        return new ProductsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(TasksViewHolder holder, int position) {
-        Task t = taskList.get(position);
+    public void onBindViewHolder(ProductsViewHolder holder, int position) {
+        Product t = productList.get(position);
         holder.textViewName.setText(t.getName());
         holder.textViewPrice.setText(t.getPrice());
         holder.textViewQuantity.setText(t.getQuantity());
@@ -38,14 +38,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return productList.size();
     }
 
-    class TasksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textViewName, textViewPrice, textViewQuantity, textViewSupplier;
 
-        public TasksViewHolder(View itemView) {
+        public ProductsViewHolder(View itemView) {
             super(itemView);
 
             textViewName = itemView.findViewById(R.id.textViewName);
@@ -59,10 +59,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
         @Override
         public void onClick(View view) {
-            Task task = taskList.get(getAdapterPosition());
+            Product product = productList.get(getAdapterPosition());
 
-            Intent intent = new Intent(mCtx, UpdateTaskActivity.class);
-            intent.putExtra("task", task);
+            Intent intent = new Intent(mCtx, UpdateProductActivity.class);
+            intent.putExtra("product", product);
 
             mCtx.startActivity(intent);
         }

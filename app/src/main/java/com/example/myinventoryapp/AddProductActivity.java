@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddProductActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPrice, editTextQuantity, editTextSupplier;
 
@@ -26,12 +26,12 @@ public class AddTaskActivity extends AppCompatActivity {
         findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTask();
+                saveProduct();
             }
         });
     }
 
-    private void saveTask() {
+    private void saveProduct() {
         final String sName = editTextName.getText().toString().trim();
         final String sPrice = editTextPrice.getText().toString().trim();
         final String sQuantity = editTextQuantity.getText().toString().trim();
@@ -60,23 +60,23 @@ public class AddTaskActivity extends AppCompatActivity {
             return;
         }
 
-        class SaveTask extends AsyncTask<Void, Void, Void> {
+        class SaveProduct extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
 
                 //creating a task
-                Task task = new Task();
-                task.setName(sName);
-                task.setPrice(sPrice);
-                task.setQuantity(sQuantity);
-                task.setSupplier(sSupplier);
+                Product product = new Product();
+                product.setName(sName);
+                product.setPrice(sPrice);
+                product.setQuantity(sQuantity);
+                product.setSupplier(sSupplier);
                 //task.setFinished(false);
 
                 //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-                        .taskDao()
-                        .insert(task);
+                        .productDao()
+                        .insert(product);
                 return null;
             }
 
@@ -89,8 +89,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         }
 
-        SaveTask st = new SaveTask();
-        st.execute();
+        SaveProduct sp = new SaveProduct();
+        sp.execute();
     }
-
 }

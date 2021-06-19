@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton buttonAddTask;
+    private FloatingActionButton buttonAddProduct;
     private RecyclerView recyclerView;
 
     @Override
@@ -26,44 +26,44 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_tasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        buttonAddTask = findViewById(R.id.floating_button_add);
-        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+        buttonAddProduct = findViewById(R.id.floating_button_add);
+        buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
                 startActivity(intent);
             }
         });
 
 
-        getTasks();
+        getProducts();
 
     }
 
 
-    private void getTasks() {
-        class GetTasks extends AsyncTask<Void, Void, List<Task>> {
+    private void getProducts() {
+        class GetProducts extends AsyncTask<Void, Void, List<Product>> {
 
             @Override
-            protected List<Task> doInBackground(Void... voids) {
-                List<Task> taskList = DatabaseClient
+            protected List<Product> doInBackground(Void... voids) {
+                List<Product> productList = DatabaseClient
                         .getInstance(getApplicationContext())
                         .getAppDatabase()
-                        .taskDao()
+                        .productDao()
                         .getAll();
-                return taskList;
+                return productList;
             }
 
             @Override
-            protected void onPostExecute(List<Task> tasks) {
-                super.onPostExecute(tasks);
-                TasksAdapter adapter = new TasksAdapter(MainActivity.this, tasks);
+            protected void onPostExecute(List<Product> products) {
+                super.onPostExecute(products);
+                ProductAdapter adapter = new ProductAdapter(MainActivity.this, products);
                 recyclerView.setAdapter(adapter);
             }
         }
 
-        GetTasks gt = new GetTasks();
-        gt.execute();
+        GetProducts gp = new GetProducts();
+        gp.execute();
     }
 
 }

@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 @Entity
-public class Task implements Serializable {
+public class Product implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

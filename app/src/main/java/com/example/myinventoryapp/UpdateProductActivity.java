@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class UpdateTaskActivity extends AppCompatActivity {
+public class UpdateProductActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPrice, editTextQuantity, editTextSupplier;
 
@@ -28,15 +28,15 @@ public class UpdateTaskActivity extends AppCompatActivity {
         editTextSupplier= findViewById(R.id.editTextSupplier);
 
 
-        final Task task = (Task) getIntent().getSerializableExtra("task");
+        final Product product = (Product) getIntent().getSerializableExtra("product");
 
-        loadTask(task);
+        loadProduct(product);
 
         findViewById(R.id.button_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_LONG).show();
-                updateTask(task);
+                updateProduct(product);
             }
         });
 
@@ -44,12 +44,12 @@ public class UpdateTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateTaskActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateProductActivity.this);
                 builder.setTitle("Are you sure?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteTask(task);
+                        deleteProduct(product);
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -65,14 +65,14 @@ public class UpdateTaskActivity extends AppCompatActivity {
         });
     }
 
-    private void loadTask(Task task) {
-        editTextName.setText(task.getName());
-        editTextPrice.setText(task.getPrice());
-        editTextQuantity.setText(task.getQuantity());
-        editTextSupplier.setText(task.getSupplier());
+    private void loadProduct(Product product) {
+        editTextName.setText(product.getName());
+        editTextPrice.setText(product.getPrice());
+        editTextQuantity.setText(product.getQuantity());
+        editTextSupplier.setText(product.getSupplier());
     }
 
-    private void updateTask(final Task task) {
+    private void updateProduct(final Product product) {
         final String sName = editTextName.getText().toString().trim();
         final String sPrice = editTextPrice.getText().toString().trim();
         final String sQuantity = editTextQuantity.getText().toString().trim();
@@ -101,17 +101,17 @@ public class UpdateTaskActivity extends AppCompatActivity {
             return;
         }
 
-        class UpdateTask extends AsyncTask<Void, Void, Void> {
+        class UpdateProduct extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                task.setName(sName);
-                task.setPrice(sPrice);
-                task.setQuantity(sQuantity);
-                task.setSupplier(sSupplier);
+                product.setName(sName);
+                product.setPrice(sPrice);
+                product.setQuantity(sQuantity);
+                product.setSupplier(sSupplier);
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-                        .taskDao()
-                        .update(task);
+                        .productDao()
+                        .update(product);
                 return null;
             }
 
@@ -120,23 +120,23 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(UpdateTaskActivity.this, MainActivity.class));
+                startActivity(new Intent(UpdateProductActivity.this, MainActivity.class));
             }
         }
 
-        UpdateTask ut = new UpdateTask();
-        ut.execute();
+        UpdateProduct up = new UpdateProduct();
+        up.execute();
     }
 
 
-    private void deleteTask(final Task task) {
-        class DeleteTask extends AsyncTask<Void, Void, Void> {
+    private void deleteProduct(final Product product) {
+        class DeleteProduct extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-                        .taskDao()
-                        .delete(task);
+                        .productDao()
+                        .delete(product);
                 return null;
             }
 
@@ -145,14 +145,13 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(UpdateTaskActivity.this, MainActivity.class));
+                startActivity(new Intent(UpdateProductActivity.this, MainActivity.class));
             }
         }
 
-        DeleteTask dt = new DeleteTask();
-        dt.execute();
+        DeleteProduct dp = new DeleteProduct();
+        dp.execute();
 
     }
-
 }
 

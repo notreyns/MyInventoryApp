@@ -9,16 +9,16 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface TaskDAO {
-    @Query("SELECT * FROM task")
-    List<Task> getAll();
+public interface ProductDAO {
+    @Query("SELECT * FROM Product")
+    List<Product> getAll();
 
     @Insert
-    void insert(Task task);
+    void insert(Product product);
 
     @Delete
-    void delete(Task task);
+    void delete(Product product);
 
     @Update
-    void update(Task task);
+    void update(Product product);
 }
