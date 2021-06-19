@@ -24,7 +24,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPrice, editTextQuantity, editTextSupplier;
     private ImageView productImageView;
-    private Bitmap bitmap;
+    private Bitmap myBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class AddProductActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 productImageView.setImageBitmap(bitmap);
                 productImageView.setVisibility(View.VISIBLE);
-                bitmap=bitmap;
+                myBitmap=bitmap;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -112,7 +112,7 @@ public class AddProductActivity extends AppCompatActivity {
                 product.setPrice(sPrice);
                 product.setQuantity(sQuantity);
                 product.setSupplier(sSupplier);
-                product.setImage(Bitmap.createBitmap(productImageView.getDrawable()));
+                product.setImage(myBitmap);
 
                 //task.setFinished(false);
 

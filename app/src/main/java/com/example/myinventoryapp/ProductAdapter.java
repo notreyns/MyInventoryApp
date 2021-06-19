@@ -34,6 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
         holder.textViewPrice.setText(t.getPrice());
         holder.textViewQuantity.setText(t.getQuantity());
         holder.textViewSupplier.setText(t.getSupplier());
+        holder.productImage.setImageBitmap(t.getImage());
 
     }
 
@@ -45,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
     class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textViewName, textViewPrice, textViewQuantity, textViewSupplier;
-        //ImageView wallpaper;
+        ImageView productImage;
 
         public ProductsViewHolder(View itemView) {
             super(itemView);
@@ -54,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
             textViewSupplier = itemView.findViewById(R.id.textViewSupplier);
-            //wallpaper= itemView.findViewById(R.id.no_items_wallpaper);
+            productImage= itemView.findViewById(R.id.product_imageview);
 
             itemView.setOnClickListener(this);
         }
