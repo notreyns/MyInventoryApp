@@ -3,10 +3,13 @@ package com.example.myinventoryapp;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton buttonAddProduct;
     private RecyclerView recyclerView;
     private ImageView wallpaper;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         wallpaper= findViewById(R.id.no_items_wallpaper);
+
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar.setTitle("Main Page");
 
 
 
@@ -44,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         getProducts();
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
 

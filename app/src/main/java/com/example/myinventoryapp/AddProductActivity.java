@@ -25,7 +25,6 @@ public class AddProductActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPrice, editTextQuantity, editTextSupplier;
     private ImageView productImageView;
-    private Bitmap myBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +105,12 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 Product product = new Product();
                 product.setName(sName);
                 product.setPrice(sPrice);
                 product.setQuantity(sQuantity);
                 product.setSupplier(sSupplier);
                 product.setImage(((BitmapDrawable)productImageView.getDrawable()).getBitmap());
-
-                //task.setFinished(false);
 
                 //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
