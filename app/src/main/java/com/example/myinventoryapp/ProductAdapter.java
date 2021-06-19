@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
     class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textViewName, textViewPrice, textViewQuantity, textViewSupplier;
+        //ImageView wallpaper;
 
         public ProductsViewHolder(View itemView) {
             super(itemView);
@@ -52,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
             textViewSupplier = itemView.findViewById(R.id.textViewSupplier);
-
+            //wallpaper= itemView.findViewById(R.id.no_items_wallpaper);
 
             itemView.setOnClickListener(this);
         }
@@ -61,9 +63,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
         public void onClick(View view) {
             Product product = productList.get(getAdapterPosition());
 
-            Intent intent = new Intent(mCtx, UpdateProductActivity.class);
+            Intent intent = new Intent(mCtx, ViewProductActivity.class);
             intent.putExtra("product", product);
-
             mCtx.startActivity(intent);
         }
     }

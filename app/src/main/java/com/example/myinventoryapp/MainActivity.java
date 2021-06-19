@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton buttonAddProduct;
     private RecyclerView recyclerView;
+    private ImageView wallpaper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_tasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        wallpaper= findViewById(R.id.no_items_wallpaper);
+
+
+
         buttonAddProduct = findViewById(R.id.floating_button_add);
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         getProducts();
 
@@ -59,11 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(products);
                 ProductAdapter adapter = new ProductAdapter(MainActivity.this, products);
                 recyclerView.setAdapter(adapter);
+                if (adapter.getItemCount()<1){
+                    wallpaper.setVisibility(View.VISIBLE);
+                }else{
+                    wallpaper.setVisibility(View.GONE);
+                }
             }
         }
 
         GetProducts gp = new GetProducts();
         gp.execute();
     }
-
 }

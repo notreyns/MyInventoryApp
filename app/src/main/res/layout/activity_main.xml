@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     tools:context=".MainActivity">
+    <ImageView
+        android:id="@+id/no_items_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/no_items_wallpaper"></ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_tasks"

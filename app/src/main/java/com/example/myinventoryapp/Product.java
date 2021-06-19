@@ -1,5 +1,7 @@
 package com.example.myinventoryapp;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -21,6 +23,11 @@ public class Product implements Serializable {
 
     @ColumnInfo(name = "supplier")
     private String supplier;
+
+    @ColumnInfo(name = "image")
+    private Bitmap image;
+
+
 
     public String getName() {
         return name;
@@ -63,4 +70,11 @@ public class Product implements Serializable {
         this.id = id;
     }
 
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 }
