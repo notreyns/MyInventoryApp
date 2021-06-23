@@ -4,7 +4,7 @@
     android:layout_height="wrap_content" android:layout_width="wrap_content">
 
     <item
-        android:id="@+id/menu_delete_all"
+        android:id="@+id/menu_delete_one_item"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:actionLayout="@layout/view_item_activity"

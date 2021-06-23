@@ -2,6 +2,7 @@ package com.example.myinventoryapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductsViewHolder> {
 
     private Context mCtx;
+    private Context context;
     private List<Product> productList;
 
     public ProductAdapter(Context mCtx, List<Product> productList) {
@@ -24,6 +26,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
     @Override
     public ProductsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_tasks, parent, false);
+        context = parent.getContext();
         return new ProductsViewHolder(view);
     }
 
@@ -34,7 +37,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
         holder.textViewPrice.setText(t.getPrice());
         holder.textViewQuantity.setText(t.getQuantity());
         holder.textViewSupplier.setText(t.getSupplier());
-        holder.productImage.setImageBitmap(t.getImage());
+        holder.productImage.setImageBitmap(BitmapFactory.decodeByteArray(t.getImage(), 0, t.getImage().length));
 
     }
 
@@ -63,10 +66,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Products
         @Override
         public void onClick(View view) {
             Product product = productList.get(getAdapterPosition());
-
-            Intent intent = new Intent(mCtx, ViewProductActivity.class);
+            Intent intent = new Intent(context, ViewProductActivity.class);
             intent.putExtra("product", product);
-            mCtx.startActivity(intent);
+            context.startActivity(intent);
         }
     }
 }

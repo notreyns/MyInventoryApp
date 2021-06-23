@@ -2,6 +2,7 @@ package com.example.myinventoryapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -25,6 +26,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private ImageView productImg;
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +35,11 @@ public class ViewProductActivity extends AppCompatActivity {
 
         textViewName = findViewById(R.id.textViewName);
         textViewPrice = findViewById(R.id.textViewPrice);
-        textViewQuantity = findViewById(R.id.textViewPrice);
+        textViewQuantity = findViewById(R.id.textViewQuantity);
         textViewSupplier= findViewById(R.id.textViewSupplier);
         productImg= findViewById(R.id.oneProductImageView);
-
         final Product product = (Product) getIntent().getSerializableExtra("product");
+
 
         loadProduct(product);
 
@@ -50,34 +52,6 @@ public class ViewProductActivity extends AppCompatActivity {
             }
         });
         toolbar = (Toolbar) findViewById(R.id.one_item_toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                if(item.getItemId()==R.id.menu_delete_all)
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewProductActivity.this);
-                    builder.setTitle("Are you sure you want do delete this item?\nThis action can\'t be undone");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            deleteProduct(product);
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-
-                    AlertDialog ad = builder.create();
-                    ad.show();
-                }
-                return false;
-            }
-        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,13 +59,35 @@ public class ViewProductActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.one_item_menu, menu);
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_delete_one_item:
+                final Product product = (Product) getIntent().getSerializableExtra("product");
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete entries")
+                        .setMessage("Are you sure you want do delete item?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteProduct(product);
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void loadProduct(Product product) {
         textViewName.setText(product.getName());
         textViewPrice.setText(product.getPrice());
         textViewQuantity.setText(product.getQuantity());
         textViewSupplier.setText(product.getSupplier());
-        productImg.setImageBitmap(product.getImage());
+        productImg.setImageBitmap(BitmapFactory.decodeByteArray(product.getImage(), 0, product.getImage().length));
     }
 
     private void deleteProduct(final Product product) {

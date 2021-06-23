@@ -25,9 +25,7 @@ public class Product implements Serializable {
     private String supplier;
 
     @ColumnInfo(name = "image")
-    private Bitmap image;
-
-
+    private byte[] image;
 
     public String getName() {
         return name;
@@ -70,11 +68,11 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Bitmap getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

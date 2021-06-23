@@ -76,6 +76,7 @@ public class AddProductActivity extends AppCompatActivity {
         final String sPrice = editTextPrice.getText().toString().trim();
         final String sQuantity = editTextQuantity.getText().toString().trim();
         final String sSupplier = editTextSupplier.getText().toString().trim();
+        final Bitmap bImage=((BitmapDrawable)productImageView.getDrawable()).getBitmap();
 
         if (sName.isEmpty()) {
             editTextName.setError("Name required");
@@ -99,6 +100,13 @@ public class AddProductActivity extends AppCompatActivity {
             editTextSupplier.requestFocus();
             return;
         }
+        Bitmap emptyBitmap = Bitmap.createBitmap(bImage.getWidth(), bImage.getHeight(), bImage.getConfig());
+        if (bImage.sameAs(emptyBitmap)) {
+            Toast.makeText(getApplicationContext(), "Choose image, please", Toast.LENGTH_LONG).show();
+
+            productImageView.requestFocus();
+        }
+
 
         class SaveProduct extends AsyncTask<Void, Void, Void> {
 
@@ -110,13 +118,19 @@ public class AddProductActivity extends AppCompatActivity {
                 product.setPrice(sPrice);
                 product.setQuantity(sQuantity);
                 product.setSupplier(sSupplier);
-                product.setImage(((BitmapDrawable)productImageView.getDrawable()).getBitmap());
+                product.setImage(getBytes(bImage));
 
                 //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .productDao()
                         .insert(product);
                 return null;
+            }
+
+            public byte[] getBytes(Bitmap bitmap) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream);
+                return stream.toByteArray();
             }
 
             @Override
